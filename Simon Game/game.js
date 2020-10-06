@@ -21,48 +21,48 @@ function playSound(color){
     soundEffect.play();
 }
 
-function checkAnswer(currentLevel){
-    for (var i = 0; i < userClickedPattern.length; i++){
-        if(gamePattern[i] == userClickedPattern[i]){ // user got right at this time
-           
+function checkAnswer(currentLevel){ 
+        if(gamePattern[currentLevel-1] === userClickedPattern[currentLevel-1]){ // user got right at this time
+            if (gamePattern.length === userClickedPattern.length){  // user finished the level
+                setTimeout(function(){nextSequence();}, 1000);
+            }
         }else {  // user got wrong 
             playSound('wrong');
             $("body").addClass('game-over');
             setTimeout(function(){
                 $("body").removeClass("game-over"); 
             }, 100);
-            startOver()
-        }
-    } 
-    if (gamePattern.length === userClickedPattern.length){  // user finished the level
-        setTimeout(function(){nextSequence();}, 1000);
-    }
+            startOver() 
+            $("h1").text('Game Over, Press Any Key to restart!');
+            $("#level-title").text("Level " + level);
+        } 
+    
 }
 
 // get to color to do animate effect
-function animatePress(currentColour){
-    $("#" + currentColour).addClass("pressed");
-    setTimeout(function(){
-        $("#" + currentColour).removeClass("pressed"); 
+function animatePress(currentColor) {
+    $("#" + currentColor).addClass("pressed");
+    setTimeout(function () {
+      $("#" + currentColor).removeClass("pressed");
     }, 100);
-}
-
-function startOver(){
-      gamePattern = []; 
-      isFirst = true;
-      level = 0;
-      $("h1").text('Game Over, Press Any Key to restart!');
-      $("#level-title").text("Level " + level);
-}
+  }
+  
+  //1. Create a new function called startOver().
+  function startOver() {
+  
+    //3. Inside this function, you'll need to reset the values of level, gamePattern and started variables.
+    level = 0;
+    gamePattern = [];
+    started = false;
+  }
 
 $(".btn").on("click", function(){
-     var userChosenColour = $(this).attr("id"); //this.id; 
+    var userChosenColour = $(this).attr("id"); //this.id;  
      userClickedPattern.push(userChosenColour); 
-     console.log("hihi " + userClickedPattern);
      playSound(userChosenColour);
      animatePress(userChosenColour);
      
-     checkAnswer(level);
+     checkAnswer(userClickedPattern.length);
 })
 
 $(document).on("keydown", function(){  // $(document).keypress(function() {
