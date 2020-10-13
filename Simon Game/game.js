@@ -33,10 +33,8 @@ function checkAnswer(currentLevel){
                 $("body").removeClass("game-over"); 
             }, 100);
             startOver() 
-            $("h1").text('Game Over, Press Any Key to restart!');
-            $("#level-title").text("Level " + level);
+            $("h1").text('Game Over, Press Any Key to restart!'); 
         } 
-    
 }
 
 // get to color to do animate effect
@@ -49,11 +47,10 @@ function animatePress(currentColor) {
   
   //1. Create a new function called startOver().
   function startOver() {
-  
     //3. Inside this function, you'll need to reset the values of level, gamePattern and started variables.
     level = 0;
     gamePattern = [];
-    started = false;
+    isFirst = true;
   }
 
 $(".btn").on("click", function(){
