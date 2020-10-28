@@ -4,8 +4,6 @@ const request = require('request');
 const bodyparser = require('body-parser');
 const mailchimp = require("@mailchimp/mailchimp_marketing"); 
 
-
-
 const app = express();
 app.use(bodyparser.urlencoded({extended: true}));
 app.use(express.static("./public"));
@@ -41,7 +39,6 @@ app.post("/", function(req, res){
     const options = {
         method: "POST",
         auth: "James:39cdc21f03160a9a7a9d5d96784ca669-us2"
-
     }
     const request = https.request(url, options, function(response){
         if (response.statusCode === 200){
