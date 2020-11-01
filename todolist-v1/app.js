@@ -1,4 +1,4 @@
-const express = require('express');
+const express = require('express'); 
 const bodyParser = require('body-parser');
 const date = require(__dirname + "/date.js"); 
 
@@ -9,7 +9,7 @@ let workItems = [];
 
 app.set("view engine", "ejs");
 app.use(bodyParser.urlencoded({extended: true}));
-app.use(express.static("./public"));    // to access the public
+app.use(express.static("./public"));;   // to access the public
 
 app.get("/", function(req, res){
     const day = date.getDay();
@@ -28,7 +28,7 @@ app.post("/", function(req, res){
 });
 
 app.get("/work", function(req, res){
-    res.render("list", {listTitle: "Working List", newListItems: workItems});
+res.render("list", {listTitle: "Working List", newListItems: workItems});
 });
 app.post("/work", function(req, res){
     const item = req.body.newItem;
