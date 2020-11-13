@@ -1,0 +1,29 @@
+{
+  "name": "fullstack",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "directories": {
+    "test": "test"
+  },
+  "dependencies": {
+    "lodash": "^4.17.20",
+    "mongodb": "^3.6.3",
+    "mongoose": "^5.10.13"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/04wakeup/webDevelopment.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/04wakeup/webDevelopment/issues"
+  },
+  "homepage": "https://github.com/04wakeup/webDevelopment#readme"
+}
