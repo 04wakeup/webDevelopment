@@ -56,15 +56,26 @@ app.get("/", function(req, res) {
 
 app.post("/", function(req, res){
 
-  const item = req.body.newItem;
+  const itemName = req.body.newItem;
+  const newItem = new Item({
+    name: itemName
+  });
 
-  if (req.body.list === "Work") {
-    workItems.push(item);
-    res.redirect("/work");
-  } else {
-    items.push(item);
-    res.redirect("/");
-  }
+  newItem.save(); // isner one
+  res.redirect("/");
+});
+
+app.post("/delete", function(req, res){
+ const itemId = req.body.checkbox;
+ Item.findByIdAndRemove(itemId, function(err){
+   if(err){
+     console.log(err);
+   } else {
+     console.log("Remove is Ok!");
+   }
+ })
+ res.redirect("/");
+ 
 });
 
 app.get("/work", function(req,res){
