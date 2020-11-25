@@ -4,6 +4,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const date = require(__dirname + "/date.js");
+const _ = require('lodash');  // to use captialize
 
 const app = express();
 
@@ -12,7 +13,7 @@ app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static("public"));
 
-mongoose.connect("mongodb://localhost:27017/todolistDB", {useNewUrlParser: true});
+mongoose.connect("mongodb+srv://admin-james:Test1234@cluster0.nl7rz.mongodb.net/todolistDB", {useNewUrlParser: true, useUnifiedTopology: true});
 const itemsSchema ={
   name: String
 };
@@ -60,12 +61,12 @@ app.get("/", function(req, res) {
 });
 
 app.get("/:listName", function(req, res){
-  const customListName = req.params.listName;
+  const customListName = _.capitalize(req.params.listName);
    List.findOne({name: customListName}, function(err, result){
     if(err){
       console.log(err)
     } else{  
-      console.log(result)
+      // console.log(result)
       if(result){
         res.render("list", {listTitle: customListName, newListItems: result.items});
       } else{ 
@@ -105,16 +106,25 @@ app.post("/", function(req, res){
 
 app.post("/delete", function(req, res){
  const itemId = req.body.checkbox;
- Item.findByIdAndRemove(itemId, function(err){
-   if(err){
-     console.log(err);
-   } else {
-     console.log("Remove is Ok!");
-   }
- })
- res.redirect("/");
-});
+ const listName = req.body.listName;
 
+ if (listName == "Today"){
+   Item.findByIdAndRemove(itemId, function(err){
+        if(err){
+          console.log(err);
+        } else {
+          console.log("Remove is Ok!");
+          res.redirect("/");
+        }
+      })
+ } else {
+  List.findOneAndUpdate({name: listName} , {$pull: {items: {_id: itemId}}} , function(err, foundList){
+    if (!err){
+      res.redirect("/" + listName);
+    }
+  })
+ }
+});
 // app.get("/work", function(req,res){
 //   res.render("list", {listTitle: "Work List", newListItems: workItems});
 // });
